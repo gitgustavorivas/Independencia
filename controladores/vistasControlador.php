@@ -9,7 +9,6 @@
             return require_once "./vistas/plantilla.php";
         }
 
-
         /*-----------controlador para obtener vistas -----------*/
         public function obtener_vistas_controlador(){
             if (isset($_GET['views'])) {

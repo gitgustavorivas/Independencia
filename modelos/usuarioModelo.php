@@ -6,14 +6,14 @@ class usuarioModelo extends mainModel
     /*............... modelo agregar usuario........... */
     protected static function agregar_usuario_modelo($datos)
     {
-        $sql = mainModel::conectar()->prepare("INSERT INTO usuario(numDocumento,nombre,apellido,usuario,clave,
+        $sql = mainModel::conectar()->prepare("INSERT INTO usuario(numDocumento,nombre,apellido,nameUsuario,clave,
                 idPrivilegios) 
-                VALUES(:Ci,:Nombre,:Apellido,:Usuario,:Clave,:IdPrivilegios)");
+                VALUES(:Ci,:Nombre,:Apellido,:nameUsuario,:Clave,:IdPrivilegios)");
 
         $sql->bindParam(":Ci", $datos['Ci']);
         $sql->bindParam(":Nombre", $datos['Nombre']);
         $sql->bindParam(":Apellido", $datos['Apellido']);
-        $sql->bindParam(":Usuario", $datos['Usuario']);
+        $sql->bindParam(":nameUsuario", $datos['nameUsuario']);
         $sql->bindParam(":Clave", $datos['Clave']);
         $sql->bindParam(":IdPrivilegios", $datos['IdPrivilegios']);
         $sql->execute();
@@ -22,7 +22,7 @@ class usuarioModelo extends mainModel
     /*............... modelo listar privilegios........... */
     protected static function cargarDesplegable()
     {
-        $sql = mainModel::conectar()->prepare("SELECT idPrivilegios,privilegio FROM privilegio ORDER BY idPrivilegios ASC");
+        $sql = mainModel::conectar()->prepare("SELECT idPrivilegios,nameprivilegio FROM privilegio ORDER BY idPrivilegios ASC");
         $sql->execute();
         return ($sql->execute()) ? $sql->fetchAll() : false;
 
@@ -41,7 +41,8 @@ class usuarioModelo extends mainModel
     protected static function datos_usuario_modelo($tipo, $id)
     {
         if ($tipo == "Unico") {
-            $sql = mainModel::conectar()->prepare("SELECT * FROM usuario WHERE idUsuario=:ID");
+            $sql = mainModel::conectar()->prepare("SELECT usuario.*,privilegio.nameprivilegio FROM usuario 
+            INNER JOIN privilegio ON usuario.idPrivilegios = privilegio.idPrivilegios WHERE idUsuario=:ID");
             $sql->bindParam(":ID", $id);
         } elseif ($tipo == "Conteo") {
             $sql = mainModel::conectar()->prepare("SELECT idUsuario FROM usuario WHERE idUsuario!='1'");
@@ -55,7 +56,7 @@ class usuarioModelo extends mainModel
     protected static function actualizar_usuario_modelo($datos)
     {
         $sql = mainModel::conectar()->prepare("UPDATE usuario SET numDocumento=:CI, nombre=:Nombre, apellido=:Apellido, 
-                    usuario=:Usuario, clave=:Clave, idPrivilegios=:Privilegio WHERE idUsuario=:ID");
+                    nameUsuario=:Usuario, clave=:Clave, idPrivilegios=:Privilegio WHERE idUsuario=:ID");
         $sql->bindParam(":CI", $datos['CI']);
         $sql->bindParam(":Nombre", $datos['Nombre']);
         $sql->bindParam(":Apellido", $datos['Apellido']);

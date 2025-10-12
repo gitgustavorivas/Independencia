@@ -119,8 +119,8 @@ class usuarioControlador extends usuarioModelo
         }
 
         /*== comprobar usuario ==*/
-        $check_user = mainModel::ejecutar_consulta_simple("SELECT usuario FROM usuario 
-                WHERE usuario='$usuario'");
+        $check_user = mainModel::ejecutar_consulta_simple("SELECT nameUsuario FROM usuario 
+                WHERE nameUsuario='$usuario'");
         if ($check_user->rowCount() > 0) {
             $alerta = [
                 "Alerta" => "simple",
@@ -136,7 +136,7 @@ class usuarioControlador extends usuarioModelo
             "Ci" => $ci,
             "Nombre" => $nombre,
             "Apellido" => $apellido,
-            "Usuario" => $usuario,
+            "nameUsuario" => $usuario,
             "Clave" => $clave,
             "IdPrivilegios" => $privilegio
         ];
@@ -180,11 +180,12 @@ class usuarioControlador extends usuarioModelo
         $inicio = ($pagina > 0) ? (($pagina * $registros) - $registros) : 0;
 
         if (isset($busqueda) && $busqueda != "") {
-            $consulta = "SELECT SQL_CALC_FOUND_ROWS * FROM usuario WHERE ((idUsuario!='$id' 
+$consulta = "SELECT SQL_CALC_FOUND_ROWS*,privilegio.nameprivilegio FROM usuario INNER JOIN privilegio ON usuario.idPrivilegios=privilegio.idPrivilegios  WHERE ((idUsuario!='$id' 
             AND  idUsuario!='1') AND (numDocumento LIKE '%$busqueda%' OR nombre LIKE '%$busqueda%' 
             OR apellido LIKE '%$busqueda%' ) ) ORDER BY nombre ASC LIMIT $inicio,$registros";
         } else {
-            $consulta = "SELECT SQL_CALC_FOUND_ROWS * FROM usuario WHERE idUsuario!='$id' 
+            $consulta = "SELECT SQL_CALC_FOUND_ROWS*,privilegio.nameprivilegio FROM usuario INNER JOIN privilegio 
+            ON usuario.idPrivilegios = privilegio.idPrivilegios WHERE idUsuario!='$id' 
             AND  idUsuario!='1' ORDER BY nombre ASC LIMIT $inicio,$registros";
         }
         $conexion = mainModel::conectar();
@@ -221,9 +222,9 @@ class usuarioControlador extends usuarioModelo
                     <td>' . $contador . '</td>
                     <td>' . $rows['numDocumento'] . '</td>
                     <td>' . $rows['nombre'] . ' ' . $rows['apellido'] . '</td>
-                    <td>' . $rows['usuario'] . '</td>
+                    <td>' . $rows['nameUsuario'] . '</td>
                     <td>' . $rows['clave'] . '</td>
-                    <td>' . $rows['idPrivilegios'] . '</td>
+                    <td>' . $rows['nameprivilegio'] . '</td>
                     <td>
                         <a href="' . SERVERURL . 'userUpdate/' . mainModel::encryption($rows['idUsuario']) . '/" class="btn btn-success">
                             <i class="fas fa-sync-alt"></i>
@@ -361,7 +362,6 @@ class usuarioControlador extends usuarioModelo
             echo json_encode($alerta);
             exit;
         } else {
-            //recibiendo los datos
             $campos = $check_user->fetch();
         }
         //recibiendo los datos
@@ -370,11 +370,10 @@ class usuarioControlador extends usuarioModelo
         $apellido = mainModel::limpiar_cadena($_POST['usuario_apellido_up']);
         $usuario = mainModel::limpiar_cadena($_POST['usuario_usuario_up']);
         
-
         if (isset($_POST['usuario_privilegio_up'])) {
             $privilegio = mainModel::limpiar_cadena($_POST['usuario_privilegio_up']);
         } else {
-            $privilegio = $campos['privilegio'];
+            $privilegio = $campos['idPrivilegios'];
         }
 
         $admin_usuario = mainModel::limpiar_cadena($_POST['usuario_admin']);
@@ -452,21 +451,19 @@ class usuarioControlador extends usuarioModelo
             exit;
         }
 
-        if (mainModel::verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ@]{7,200}", $admin_clave)) {
+        if (mainModel::verificar_datos("[a-zA-Z0-9]{1,35}", $admin_clave)) {
             $alerta = [
                 "Alerta" => "simple",
                 "Titulo" => "Verificación de datos",
-                "Texto" => "Tu clave no cumple con los datos solicitados",
+                "Texto" => "Tu Clave no Cumple con el Formato Solicitados",
                 "Tipo" => "error"
             ];
             echo json_encode($alerta);
             exit;
-            
-        } 
-        $admin_clave = mainModel::encryption($admin_clave);
-        
+        }
+        $admin_clave=mainModel::encryption($admin_clave);
 
-        if ($privilegio < 1 || $privilegio > 3) {
+/*         if ($privilegio < 1 || $privilegio > 3) {
                 $alerta = [
                     "Alerta" => "simple",
                     "Titulo" => "Verificación de datos",
@@ -475,7 +472,7 @@ class usuarioControlador extends usuarioModelo
                 ];
                 echo json_encode($alerta);
                 exit;
-        }
+        } */
 
         /*== comprobar CI ==*/
         if ($ci != $campos['numDocumento']) {
@@ -493,11 +490,10 @@ class usuarioControlador extends usuarioModelo
             }
         }
 
-
         /*== comprobar usuario ==*/
-        if ($usuario != $campos['usuario']) {
-            $check_user = mainModel::ejecutar_consulta_simple("SELECT usuario FROM usuario 
-        WHERE usuario='$usuario'");
+        if ($usuario != $campos['nameUsuario']) {
+            $check_user = mainModel::ejecutar_consulta_simple("SELECT nameUsuario FROM usuario 
+        WHERE nameUsuario='$usuario'");
             if ($check_user->rowCount() > 0) {
                 $alerta = [
                     "Alerta" => "simple",
@@ -536,14 +532,13 @@ class usuarioControlador extends usuarioModelo
                 $clave=mainModel::encryption($_POST['usuario_clave_nueva_1']);
             }
         }else {
-           $clave=$campos['clave'];
+        $clave=$campos['clave'];
         }
-
 
         /*comprobando credenciales para actualizar datos*/
         if ($tipo_cuenta=="Propia") {
             $check_cuenta=mainModel::ejecutar_consulta_simple("SELECT idUsuario FROM usuario WHERE 
-            usuario='$admin_usuario' AND clave='$admin_clave' AND idUsuario='$id'");
+            nameUsuario='$admin_usuario' AND clave='$admin_clave' AND idUsuario='$id'");
         } else {
             session_start(['name'=>'IND']);
             if ($_SESSION['privilegio']!=1) {
@@ -557,9 +552,10 @@ class usuarioControlador extends usuarioModelo
                 exit;
             }
             $check_cuenta=mainModel::ejecutar_consulta_simple("SELECT 
-            idUsuario FROM usuario WHERE usuario='$admin_usuario'
-            AND clave='$admin_clave'");
+            idUsuario FROM usuario WHERE nameUsuario='$admin_usuario'
+            AND clave='$admin_clave'"); 
         }
+        
         if ($check_cuenta->rowCount()<=0) {
             $alerta = [
                 "Alerta" => "simple",
@@ -570,13 +566,12 @@ class usuarioControlador extends usuarioModelo
             echo json_encode($alerta);
             exit;
         }
-
         /*preparando datos para enviarlos al modelo*/
         $datos_usuario_up=[
             "CI"=>$ci,
-            "Nomre"=>$nombre,
-            "Apelido"=>$apellido,
-            "Usurio"=>$usuario,
+            "Nombre"=>$nombre,
+            "Apellido"=>$apellido,
+            "Usuario"=>$usuario,
             "Clave"=>$clave,
             "Privilegio"=>$privilegio,
             "ID"=>$id

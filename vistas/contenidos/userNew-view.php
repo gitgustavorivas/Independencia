@@ -112,7 +112,7 @@
                             <select class="form-control" name="usuario_privilegio_reg" id="idprivilegio" required>
                                 <option selected disabled value="">No especificado</option>
                                 <?php foreach ($privilegios as $privilegio) { ?>
-                                    <option value="<?= $privilegio['idPrivilegios'] ?>"><?= $privilegio['privilegio'] ?>
+                                    <option value="<?= $privilegio['idPrivilegios'] ?>"><?= $privilegio['nameprivilegio'] ?>
                                     </option>
                                 <?php } ?>
                             </select>

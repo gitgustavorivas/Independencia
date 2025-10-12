@@ -47,6 +47,7 @@ if ($LC->encryption($_SESSION['id']) != $pagina[1]) {
 
     if ($datos_usuario->rowCount() == 1) {
         $campos = $datos_usuario->fetch();
+        
         ?>
         <form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/usuarioAjax.php" method="POST"
             data-form="update" autocomplete="off">
@@ -55,6 +56,7 @@ if ($LC->encryption($_SESSION['id']) != $pagina[1]) {
                 <legend><i class="far fa-address-card"></i> &nbsp;INFORMACION DEL USUARIO</legend>
                 <div class="container-fluid">
                     <div class="row">
+
                         <div class="col-12 col-md-2">
                             <div class="form-group">
                                 <label for="usuario_ci_up" class="bmd-label-floating">C.I.N°</label>
@@ -80,10 +82,10 @@ if ($LC->encryption($_SESSION['id']) != $pagina[1]) {
                                     value="<?php echo $campos['apellido']; ?>">
                             </div>
                         </div>
-
                     </div>
                 </div>
             </fieldset>
+
             <br><br><br>
             <fieldset>
                 <legend><i class="fas fa-user-lock"></i> &nbsp; Información de la cuenta</legend>
@@ -94,13 +96,14 @@ if ($LC->encryption($_SESSION['id']) != $pagina[1]) {
                                 <label for="usuario_usuario_up" class="bmd-label-floating">Usuario</label>
                                 <input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9]{3,35}" class="form-control"
                                     name="usuario_usuario_up" id="usuario_usuario_up" maxlength="35"
-                                    value="<?php echo $campos['usuario']; ?>">
+                                    value="<?php echo $campos['nameUsuario']; ?>">
                             </div>
                         </div>
                     </div>
                 </div>
             </fieldset>
             <br><br><br>
+
             <fieldset>
                 <legend style="margin-top: 40px;"><i class="fas fa-lock"></i> &nbsp; Nueva contraseña</legend>
                 <p>Para actualizar la contraseña de esta cuenta ingrese una nueva y vuelva a escribirla. En caso que no
@@ -125,6 +128,7 @@ if ($LC->encryption($_SESSION['id']) != $pagina[1]) {
                 </div>
             </fieldset>
             <br><br><br>
+
             <fieldset>
                 <?php if ($_SESSION['privilegio'] == 1 && $campos['idUsuario'] != 1) { ?>
                     <legend><i class="fas fa-medal"></i> &nbsp; Nivel de privilegio</legend>
@@ -139,15 +143,17 @@ if ($LC->encryption($_SESSION['id']) != $pagina[1]) {
                                     <label for="usuario_privilegio_up" class="form-label">PRIVILEGIO</label>
                                     <select class="form-control" name="usuario_privilegio_up" id="usuario_privilegio_up"
                                         required>
-                                        <option selected disabled value="">No especificado</option>
+                                        <option selected disabled value=""><?php echo $campos['nameprivilegio']; ?></option>
                                         <?php foreach ($privilegios as $privilegio) { ?>
-                                            <option value="<?= $privilegio['idPrivilegios'] ?>"><?= $privilegio['privilegio'] ?>
+                                            <option 
+                                                
+                                                value="<?= $privilegio['idPrivilegios'] ?>"><?= $privilegio['nameprivilegio'] ?>
+                                                
                                             </option>
                                         <?php } ?>
                                     </select>
                                     <div class="invalid-feedback">seleccione un elemento válido!</div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -169,14 +175,15 @@ if ($LC->encryption($_SESSION['id']) != $pagina[1]) {
                         <div class="col-12 col-md-6">
                             <div class="form-group">
                                 <label for="clave_admin" class="bmd-label-floating">Contraseña</label>
-                                <input type="password" class="form-control" name="clave_admin" id="clave_admin"
-                                    pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ@]{7,200}" maxlength="200" required="">
+                                <input type="password" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ@]{7,200}"
+                                class="form-control" name="clave_admin" id="clave_admin" maxlength="200" required="">
                             </div>
                         </div>
                     </div>
                 </div>
             </fieldset>
-            <?php if ($LC->encryption($_SESSION['id'])!=$pagina[1]) { ?>
+
+            <?php if ($LC->encryption($_SESSION['privilegio'])!=$pagina[1]) { ?>
                 <input type="hidden" name="tipo_cuenta" value="Impropia">
             <?php } else { ?>
                 <input type="hidden" name="tipo_cuenta" value="Propia">

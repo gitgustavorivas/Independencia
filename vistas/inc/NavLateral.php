@@ -83,13 +83,13 @@
 							<a href="#" class="nav-btn-submenu"><i class="fas fa-user-tie fa-fw"></i> &nbsp; Personales <i class="fas fa-chevron-down"></i></a>
 							<ul>
 								<li>
-									<a href="<?php echo SERVERURL;?>personalNew"><i class="fas fa-plus fa-fw"></i> &nbsp; Nuevo Personal</a>
+									<a href="<?php echo SERVERURL;?>personalNew/"><i class="fas fa-plus fa-fw"></i> &nbsp; Nuevo Personal</a>
 								</li>
 								<li>
-									<a href="<?php echo SERVERURL;?>personalList"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de Personales</a>
+									<a href="<?php echo SERVERURL;?>personalList/"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de Personales</a>
 								</li>
 								<li>
-									<a href="<?php echo SERVERURL;?>personalSearch"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar Personal</a>
+									<a href="<?php echo SERVERURL;?>personalSearch/"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar Personal</a>
 								</li>
 							</ul>
 						</li>
