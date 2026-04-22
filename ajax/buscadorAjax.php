@@ -2,7 +2,8 @@
 session_start(['name' => 'IND']);
 require_once "../config/APP.php";
 
-if (isset($_POST['busqueda_inicial']) || isset($_POST['eliminar_busqueda']) || isset($_POST['fecha_inicio']) || isset($_POST['fecha_final'])) {
+if (isset($_POST['busqueda_inicial']) || isset($_POST['eliminar_busqueda']) || 
+isset($_POST['fecha_inicio']) || isset($_POST['fecha_final'])) {
     $data_url = [
         "usuario" => "userSearch",
         "cliente" => "clientSearch",
@@ -18,7 +19,8 @@ if (isset($_POST['busqueda_inicial']) || isset($_POST['eliminar_busqueda']) || i
         "presentacion" => "presentacionSearch",
         "nivelCalidad" => "nivelCalidadSearch",
         "loteProduccion" => "loteSearch",
-        "categoria" => "categoriaSearch"
+        "categoria" => "categoriaSearch",
+        "matprima" => "matPrimaSearch"
     ];
 
     if (isset($_POST['modulo'])) {

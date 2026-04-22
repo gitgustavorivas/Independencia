@@ -1,13 +1,18 @@
 <!-- Page header -->
+<?php
+if ($_SESSION['privilegio'] != 1) {
+    echo $LC->forzar_cierre_controlador();
+    exit();
+}
+?>
 <div class="full-box page-header">
     <h3 class="text-left">
         <i class="fas fa-plus fa-fw"></i> &nbsp; AGREGAR CLIENTE
     </h3>
     <p class="text-justify">
-    POR FAVOR INGRESE TODOS LOS VALORES REQUERIDOS SIN DEJAR NINGUN ESPACIO EN BLANCO.
     </p>
     <p class="text-jus">
-        <a href="<?php echo SERVERURL;?>home/" type="button" class="btn btn-success">
+        <a href="<?php echo SERVERURL; ?>home/" type="button" class="btn btn-success">
             <i class="fas fa-arrow-left"></i> volver atras
         </a>
     </p>
@@ -16,20 +21,24 @@
 <div class="container-fluid">
     <ul class="full-box list-unstyled page-nav-tabs">
         <li>
-            <a class="active" href="<?php echo SERVERURL;?>clientNew/"><i class="fas fa-plus fa-fw"></i> &nbsp; AGREGAR CLIENTE</a>
+            <a class="active" href="<?php echo SERVERURL; ?>clientNew/"><i class="fas fa-plus fa-fw"></i> &nbsp; AGREGAR
+                CLIENTE</a>
         </li>
         <li>
-            <a href="<?php echo SERVERURL;?>client/"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE CLIENTES</a>
+            <a href="<?php echo SERVERURL; ?>clientList/"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE
+                CLIENTES</a>
         </li>
         <li>
-            <a href="<?php echo SERVERURL;?>clientSearch/"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR CLIENTE</a>
+            <a href="<?php echo SERVERURL; ?>clientSearch/"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR
+                CLIENTE</a>
         </li>
     </ul>
 </div>
 
 <!-- Content here-->
 <div class="container-fluid">
-    <form action="" class="form-neon" autocomplete="off">
+    <form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/clienteAjax.php" method="POST"
+        data-form="save" autocomplete="off">
         <fieldset>
             <legend><i class="fas fa-user"></i> &nbsp; Información básica</legend>
             <div class="container-fluid">
@@ -37,37 +46,37 @@
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="cliente_nombre" class="bmd-label-floating">Nombre</label>
-                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,40}" class="form-control"
-                                name="cliente_nombre_reg" id="cliente_nombre" maxlength="40">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <div class="form-group">
-                            <label for="cliente_apellido" class="bmd-label-floating">Apellido</label>
-                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,40}" class="form-control"
-                                name="cliente_apellido_reg" id="cliente_apellido" maxlength="40">
+                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,40}" class="form-control"
+                                name="cliente_nombre_reg" id="cliente_nombre" maxlength="40" required="">
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group">
-                            <label for="cliente_dni" class="bmd-label-floating">CIN°:</label>
-                            <input type="num" pattern="[0-9]{1,27}" class="form-control" name="cliente_dni_reg"
-                                id="cliente_dni" maxlength="27">
+                            <label for="cliente_apellido" class="bmd-label-floating">Apellido</label>
+                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,40}" class="form-control"
+                                name="cliente_apellido_reg" id="cliente_apellido" maxlength="40" required="">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="cliente_ci" class="bmd-label-floating">CIN°:</label>
+                            <input type="num" pattern="[0-9]{7,12}" class="form-control" name="cliente_ci_reg"
+                                id="cliente_ci" maxlength="27" required="">
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-6">
                         <div class="form-group">
-                            <label for="cliente_telefono" class="bmd-label-floating">Celular</label>
-                            <input type="num" pattern="[0-9]{8,20}" class="form-control" name="cliente_telefono_reg"
-                                id="cliente_telefono" maxlength="27">
+                            <label for="cliente_celular" class="bmd-label-floating">Celular</label>
+                            <input type="num" pattern="[0-9]{10,15}" class="form-control" name="cliente_celular_reg"
+                                id="cliente_celular" maxlength="27">
                         </div>
                     </div>
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-6">
                         <div class="form-group">
-                            <label for="cliente_direccion" class="bmd-label-floating">Correo</label>
-                            <input type="text" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\]{1,150}" class="form-control"
-                                name="cliente_direccion_reg" id="cliente_direccion" maxlength="150">
+                            <label for="cliente_email" class="bmd-label-floating">Correo</label>
+                            <input type="email" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ@.-_]{1,100}" class="form-control"
+                                name="cliente_email_reg" id="cliente_email" maxlength="150">
                         </div>
                     </div>
                 </div>

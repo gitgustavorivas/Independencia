@@ -11,15 +11,21 @@
 
 <!-- Content -->
 <div class="full-box tile-container">
-    <a href="<?php echo SERVERURL;?>clientNew/" class="tile">
+
+    <?php
+        require_once "./controladores/clienteControlador.php";
+        $ins_cliente = new clienteControlador();
+        $total_cliente = $ins_cliente->datos_cliente_controlador("Conteo",0);
+    ?>
+    <a href="<?php echo SERVERURL;?>clientList/" class="tile">
         <div class="tile-tittle">Clientes</div>
         <div class="tile-icon">
-            <i class="fas fa-users fa-fw"></i>
-            <p>5 Registrados</p>
+            <i class="fas  fa-user-secret fa-fw"></i>
+            <p><?php echo $total_cliente->rowCount(); ?> Registrados</p>
         </div>
     </a>
 
-    <a href="<?php echo SERVERURL;?>itemNew" class="tile">
+    <a href="<?php echo SERVERURL;?>itemList/" class="tile">
         <div class="tile-tittle">Items</div>
         <div class="tile-icon">
             <i class="fas fa-pallet fa-fw"></i>
@@ -27,7 +33,7 @@
         </div>
     </a>
 
-    <a href="<?php echo SERVERURL;?>cajaNew" class="tile">
+    <a href="<?php echo SERVERURL;?>cajaList/" class="tile">
         <div class="tile-tittle">Cajas</div>
         <div class="tile-icon">
             <i class="fas fa-light fa-cash-register"></i>
@@ -49,7 +55,7 @@
     </a>
     <?php }?>
 
-    <a href="<?php echo SERVERURL;?>personalNew" class="tile">
+    <a href="<?php echo SERVERURL;?>personalList/" class="tile">
         <div class="tile-tittle">Personales</div>
         <div class="tile-icon">
             <i class="fas fa-user-tie fa-fw"></i>

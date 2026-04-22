@@ -1,9 +1,9 @@
 <!-- Page header -->
-<?php 
-    if ($_SESSION['privilegio']!=1) {
-        echo $LC->forzar_cierre_controlador();
-        exit();
-    }
+<?php
+if ($_SESSION['privilegio'] != 1) {
+    echo $LC->forzar_cierre_controlador();
+    exit();
+}
 ?>
 
 <div class="full-box page-header">
@@ -20,18 +20,19 @@
     </p>
 </div>
 
-
-
 <div class="container-fluid">
     <ul class="full-box list-unstyled page-nav-tabs">
         <li>
-            <a class="active" href="<?php echo SERVERURL;?>personalNew/"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVO PERSONAL</a>
+            <a class="active" href="<?php echo SERVERURL; ?>personalNew/"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVO
+                PERSONAL</a>
         </li>
         <li>
-            <a href="<?php echo SERVERURL;?>personalList/"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE PERSONAL</a>
+            <a href="<?php echo SERVERURL; ?>personalList/"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE
+                PERSONAL</a>
         </li>
         <li>
-            <a href="<?php echo SERVERURL;?>personalSearch/"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR PERSONAL</a>
+            <a href="<?php echo SERVERURL; ?>personalSearch/"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR
+                PERSONAL</a>
         </li>
     </ul>
 </div>
@@ -53,48 +54,50 @@
                     <div class="col-12 col-md-5">
                         <div class="form-group">
                             <label for="personal_nombre" class="bmd-label-floating">Nombres</label>
-                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]{2,35}" class="form-control"
-                                name="personal_nombre_reg" id="personal_nombre" maxlength="35" required="">
+                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,40}" class="form-control"
+                                name="personal_nombre_reg" id="personal_nombre" maxlength="40" required="">
                         </div>
                     </div>
 
                     <div class="col-12 col-md-5">
                         <div class="form-group">
                             <label for="personal_apellido" class="bmd-label-floating">Apellidos</label>
-                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]{2,35}" class="form-control"
-                                name="personal_apellido_reg" id="personal_apellido" maxlength="35" required="">
+                            <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,40}" class="form-control"
+                                name="personal_apellido_reg" id="personal_apellido" maxlength="40" required="">
                         </div>
                     </div>
 
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="personal_ci" class="bmd-label-floating">C.I.N°</label>
-                            <input type="text" pattern="[0-9]{6,20}" class="form-control" 
-                                name="personal_ci_reg" id="personal_ci" maxlength="20" required="">
+                            <input type="text" pattern="[0-9]{7,12}" class="form-control" name="personal_ci_reg"
+                                id="personal_ci" maxlength="12" required="">
                         </div>
                     </div>
 
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="personal_correo" class="bmd-label-floating">Correo</label>
-                            <input type="email" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ@]{1,100}" class="form-control" 
-                            name="personal_correo_reg" id="personal_correo" maxlength="50">
+                            <input type="email" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ@.-_]{1,100}" class="form-control"
+                                name="personal_correo_reg" id="personal_correo" maxlength="100">
                         </div>
                     </div>
 
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="personal_telefono" class="bmd-label-floating">Teléfono</label>
-                            <input type="num" pattern="[0-9()+]{8,20}" class="form-control" name="personal_telefono_reg"
-                                id="personal_telefono" maxlength="20">
+                            <input type="num" pattern="[0-9+]{10,15}" class="form-control" name="personal_telefono_reg"
+                                id="personal_telefono" maxlength="15">
                         </div>
                     </div>
-
-                    <div class="col-12 col-md-6">
-                        <div class="form-group">
-                            <label for="Personal_Direccion" class="form-label">DIRECCION</label>
-                            <select class="form-control" name="personal_direccion_reg" id="Personal_Direccion" required>
-                                <option selected disabled value="">Agrega Una Direccion</option>
+        <fieldset>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label for="Personal_Direccion" class="bmd-label-floating">DIRECCION</label>
+                            <select class="form-control" name="personal_direccion_reg" id="Personal_Direccion">
+                                <option selected disabled value="">SELECCIONE UNA DIRECCION</option>
                                 <?php foreach ($direcciones as $direcction) { ?>
                                     <option value="<?= $direcction['idDireccion'] ?>"><?= $direcction['ciudad'] ?>
                                     </option>
@@ -105,7 +108,6 @@
                     </div>
                 </div>
             </div>
-        </fieldset>
         <br><br>
         <p class="text-center" style="margin-top: 40px;">
             <button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp;
@@ -116,4 +118,3 @@
         </p>
     </form>
 </div>
-

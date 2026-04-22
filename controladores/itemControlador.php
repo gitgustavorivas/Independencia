@@ -1,16 +1,16 @@
 <?php
 
 if ($peticionAjax) {
-    require_once "../modelos/usuarioModelo.php";
+    require_once "../modelos/itemModelo.php";
 } else {
-    require_once "./modelos/usuarioModelo.php";
+    require_once "./modelos/itemModelo.php";
 }
 
-class usuarioControlador extends usuarioModelo
+class itemControlador extends itemModelo
 {
 
-    /*............... controlador agregar usuario........... */
-    public function agregar_usuario_controlador()
+    /*............... controlador agregar item........... */
+    public function agregar_item_controlador()
     {
         $ci = mainModel::limpiar_cadena($_POST['usuario_ci_reg']);
         $nombre = mainModel::limpiar_cadena($_POST['usuario_nombre_reg']);
@@ -265,9 +265,14 @@ class usuarioControlador extends usuarioModelo
         return $tabla;
 
     }/* fin del Controlador */
-    public function combolist()
+    public function combolistcategoria()
     {
-        return ($this->cargarDesplegable()) ? $this->cargarDesplegable() : false;
+        return ($this->cargarDesplegableCategoria()) ? $this->cargarDesplegableCategoria() : false;
+    }
+
+    public function combolistlote()
+    {
+        return ($this->cargarDesplegablelote()) ? $this->cargarDesplegablelote() : false;
     }
 
     /*............... controlador Eliminar usuario........... */
@@ -602,4 +607,3 @@ class usuarioControlador extends usuarioModelo
     }/*fin del controlador*/
 
 }
-

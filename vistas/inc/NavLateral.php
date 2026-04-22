@@ -23,7 +23,7 @@
 									<a href="<?php echo SERVERURL;?>clientNew/"><i class="fas fa-plus fa-fw"></i> &nbsp; Agregar Cliente</a>
 								</li>
 								<li>
-									<a href="<?php echo SERVERURL;?>client/"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de clientes</a>
+									<a href="<?php echo SERVERURL;?>clientList/"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de clientes</a>
 								</li>
 								<li>
 									<a href="<?php echo SERVERURL;?>clientSearch"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar cliente</a>

@@ -1,136 +1,101 @@
 <!-- Page header -->
+<?php 
+if ($_SESSION['privilegio'] != 1) {
+    echo $LC->forzar_cierre_controlador();
+    exit();
+}
+?>
 <div class="full-box page-header">
     <h3 class="text-left">
         <i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR PRESENTACION
     </h3>
-    <p class="text-justify">
-        YERBA MATE INDEPENDENCIA...
-    </p>
-    <p class="text-jus">
+    <p class="text-center">
+YERBA MATE INDEPENDENCIA...
+</p>
+<p class="text-jus">
         <a href="<?php echo SERVERURL;?>homeReferencias/" class="btn btn-success">
             <i class="fas fa-less-than"></i> volver atras
         </a>
     </p>
 </div>
-
 <div class="container-fluid">
     <ul class="full-box list-unstyled page-nav-tabs">
-    <li>
-            <a href="<?php echo SERVERURL;?>presentacionNew/"><i class="fas fa-plus fa-fw"></i> &nbsp; AGREGAR PRESENTACIONES</a>
+        <li>
+            <a href="<?php echo SERVERURL;?>presentacionNew/"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVA PRESENTACION</a>
         </li>
         <li>
-            <a href="<?php echo SERVERURL;?>presentacionList/"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTAR PRESENTACIONES</a>
+            <a href="<?php echo SERVERURL;?>presentacionList/"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE PRESENTACIONES</a>
         </li>
         <li>
-            <a class="active" href="<?php echo SERVERURL;?>presentacionSearch/"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR PRESENTACIONES</a>
+            <a class="active" href="<?php echo SERVERURL;?>presentacionSearch/"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR PRESENTACION</a>
         </li>
     </ul>
 </div>
 
 <!-- Content -->
-<div class="container-fluid">
-    <form class="form-neon" action="">
-        <div class="container-fluid">
-            <div class="row justify-content-md-center">
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label for="inputSearch" class="bmd-label-floating">¿Qué presentacion estas buscando?</label>
-                        <input type="text" class="form-control" name="busqueda-" id="inputSearch" maxlength="30">
+<?php
+if (!isset($_SESSION['busqueda_presentacion']) && empty($_SESSION['busqueda_presentacion'])) {
+    ?>
+    <div class="container-fluid">
+        <form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/buscadorAjax.php" method="POST"
+            data-form="default" autocomplete="off">
+            <input type="hidden" name="modulo" value="presentacion">
+            <div class="container-fluid">
+                <div class="row justify-content-md-center">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="inputSearch" class="bmd-label-floating">¡Escribe tu Termino de busqueda!</label>
+                            <input type="text" class="form-control" name="busqueda_inicial" id="inputSearch" maxlength="30">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <p class="text-center" style="margin-top: 40px;">
+                            <button type="submit" class="btn btn-raised btn-info"><i class="fas fa-search"></i> &nbsp;
+                                BUSCAR</button>
+                        </p>
                     </div>
                 </div>
-                <div class="col-12">
-                    <p class="text-center" style="margin-top: 40px;">
-                        <button type="submit" class="btn btn-raised btn-info"><i class="fas fa-search"></i> &nbsp;
-                            BUSCAR</button>
-                    </p>
-                </div>
             </div>
-        </div>
-    </form>
-</div>
-
-<div class="container-fluid">
-    <form action="">
-        <input type="hidden" name="eliminar-busqueda" value="eliminar">
-        <div class="container-fluid">
-            <div class="row justify-content-md-center">
-                <div class="col-12 col-md-6">
-                    <p class="text-center" style="font-size: 20px;">
-                        Resultados de la busqueda <strong>“Buscar”</strong>
-                    </p>
-                </div>
-                <div class="col-12">
-                    <p class="text-center" style="margin-top: 20px;">
-                        <button type="submit" class="btn btn-raised btn-danger"><i class="far fa-trash-alt"></i> &nbsp;
-                            ELIMINAR BÚSQUEDA</button>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-
-<div class="container-fluid">
-    <div class="table-responsive">
-        <table class="table table-dark table-sm">
-        <thead>
-                <tr class="text-center roboto-medium">
-                    <th>ID</th>
-                    <th>UNI/MEDIDA</th>
-                    <th>SIMBOLO</th>
-                    <th>ACTUALIZAR</th>
-                    <th>ELIMINAR</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="text-center">
-                    <td>1</td>
-                    <td>KILO GRAMO</td>
-                    <td>KG</td>
-                    <td>
-                        <a href="ProductionUpdate" class="btn btn-success">
-                            <i class="fas fa-sync-alt"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <form action="">
-                            <button type="button" class="btn btn-warning">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                <tbody>
-                <tr class="text-center">
-                    <td>1</td>
-                    <td>GRAMO</td>
-                    <td>KG</td>
-                    <td>
-                        <a href="ProductionUpdate" class="btn btn-success">
-                            <i class="fas fa-sync-alt"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <form action="">
-                            <button type="button" class="btn btn-warning">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-        </table>
+        </form>
     </div>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
-</div>
+<?php } else { ?>
+    <div class="container-fluid">
+        <form class="FormularioAjax" action="<?php echo SERVERURL; ?>ajax/buscadorAjax.php" method="POST" data-form="search"
+            autocomplete="off">
+            <input type="hidden" name="modulo" value="presentacion">
+            <input type="hidden" name="eliminar_busqueda" value="eliminar">
+            <div class="container-fluid">
+                <div class="row justify-content-md-center">
+                    <div class="col-12 col-md-6">
+                        <p class="text-center" style="font-size: 20px;">
+                            Resultados de la busqueda <strong>“<?php echo $_SESSION['busqueda_presentacion']; ?>”</strong>
+                        </p>
+                    </div>
+                    <div class="col-12">
+                        <p class="text-center" style="margin-top: 20px;">
+                            <button type="submit" class="btn btn-raised btn-danger"><i class="far fa-trash-alt"></i>
+                                &nbsp; ELIMINAR BÚSQUEDA</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="container-fluid">
+        <?php
+        require_once "./controladores/presentacionControlador.php";
+        $ins_presentacion = new presentacionControlador();
+        echo $ins_presentacion->paginador_presentacion_controlador(
+            $pagina[1],
+            15,
+            $_SESSION['privilegio'],
+            $_SESSION['id'],
+            $pagina[0],
+            $_SESSION['busqueda_presentacion']
+        );
+
+        ?>
+
+    </div>
+<?php } ?>

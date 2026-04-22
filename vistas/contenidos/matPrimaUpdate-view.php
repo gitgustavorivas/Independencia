@@ -9,11 +9,11 @@ if ($LC->encryption($_SESSION['id']) != $pagina[1]) {
 ?>
 <div class="full-box page-header">
     <h3 class="text-left">
-        <i class="fas fa-sync-alt fa-fw"></i> &nbsp; ACTUALIZAR CLIENTE
+        <i class="fas fa-sync-alt fa-fw"></i> &nbsp; ACTUALIZAR MATERIA PRIMA
     </h3>
     <p class="text-center"> YERBA MATE INDEPENDENCIA...</p>
     <p class="text-jus">
-        <a href="<?php echo SERVERURL; ?>home/" type="button" class="btn btn-success">
+        <a href="<?php echo SERVERURL; ?>homeReferencias/" type="button" class="btn btn-success">
             <i class="fas fa-arrow-left"></i> volver atras
         </a>
     </p>
@@ -22,15 +22,13 @@ if ($LC->encryption($_SESSION['id']) != $pagina[1]) {
 <div class="container-fluid">
     <ul class="full-box list-unstyled page-nav-tabs">
         <li>
-            <a href="<?php echo SERVERURL; ?>clientNew/"><i class="fas fa-plus fa-fw"></i> &nbsp; AGREGAR CLIENTE</a>
+            <a href="<?php echo SERVERURL; ?>matPrimaNew/"><i class="fas fa-plus fa-fw"></i> &nbsp; AGREGAR MATERIA PRIMA</a>
         </li>
         <li>
-            <a href="<?php echo SERVERURL; ?>clientList/"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE
-                CLIENTES</a>
+            <a href="<?php echo SERVERURL; ?>matPrimaList/"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE MATERIA PRIMA</a>
         </li>
         <li>
-            <a href="<?php echo SERVERURL; ?>clientSearch/"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR
-                CLIENTE</a>
+            <a href="<?php echo SERVERURL; ?>matPrimaSearch/"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR MATERIA PRIMA</a>
         </li>
     </ul>
 </div>
@@ -38,61 +36,70 @@ if ($LC->encryption($_SESSION['id']) != $pagina[1]) {
 <!-- Content here-->
 <div class="container-fluid">
     <?php
-    require_once "./controladores/clienteControlador.php";
-    $ins_cliente = new clienteControlador();
-    $datos_cliente = $ins_cliente->datos_cliente_controlador("Unico", $pagina[1]);
+    require_once "./controladores/matPrimaControlador.php";
+    $ins_matPrima = new matPrimaControlador();
+    $datos_matPrima = $ins_matPrima->datos_matPrima_controlador("Unico", $pagina[1]);
 
-    if ($datos_cliente->rowCount() == 1) {
-        $campos = $datos_cliente->fetch();
+    if ($datos_matPrima->rowCount() == 1) {
+        $campos = $datos_matPrima->fetch();
 
         ?>
-        <form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/clienteAjax.php" method="POST"
+        <form class="form-neon FormularioAjax" action="<?php echo SERVERURL; ?>ajax/matPrimaAjax.php" method="POST"
             data-form="update" autocomplete="off">
-            <input type="hidden" name="cliente_id_up" value="<?php echo $pagina[1]; ?>">
+            <input type="hidden" name="matPrima_id_up" value="<?php echo $pagina[1]; ?>">
             <fieldset>
-                <legend><i class="fas fa-user"></i> &nbsp; Actualizando Datos Del Cliente</legend>
+                <legend><i class="fas fa-user"></i> &nbsp; ACTUALIZANDO DATOS DE MATERA PRIMA</legend>
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12 col-md-6">
                             <div class="form-group">
-                                <label for="cliente_nombre_up" class="bmd-label-floating">Nombre</label>
-                                <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,40}" class="form-control"
-                                    name="cliente_nombre_up" id="cliente_nombre_up" maxlength="40"
-                                    value="<?php echo $campos['nombre']; ?>" required="">
+                                <label for="matprima_nombre_up" class="bmd-label-floating">Nombre Insumo</label>
+                                <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]{1,100}" class="form-control"
+                                    name="matprima_nombre_up" id="matprima_nombre_up" maxlength="100"
+                                    value="<?php echo $campos['nombreInsumo']; ?>" required="">
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="form-group">
-                                <label for="cliente_apellido_up" class="bmd-label-floating">Apellido</label>
-                                <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,40}" class="form-control"
-                                    name="cliente_apellido_up" id="cliente_apellido_up" maxlength="40"
-                                    value="<?php echo $campos['apellido']; ?>" required="">
+                                <label for="matprima_costounitario_up" class="bmd-label-floating">Costo Unitario</label>
+                                <input type="text" class="form-control" name="matprima_costounitario_up" 
+                                    id="matprima_costounitario_up" maxlength="100"
+                                    value="<?php echo $campos['costoUnitario']; ?>" required="">
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="form-group">
-                                <label for="cliente_ci_up" class="bmd-label-floating">C.I.N°:</label>
-                                <input type="num" pattern="[0-9]{7,12}" class="form-control" name="cliente_ci_up"
-                                    id="cliente_ci_up" maxlength="27" value="<?php echo $campos['numeroCi']; ?>"
-                                    required="">
+                                <label for="matprima_unimedida_up" class="bmd-label-floating">Unidad Medida</label>
+                                <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,40}" class="form-control"
+                                    name="matprima_unimedida_up" id="matprima_unimedida_up" maxlength="100"
+                                    value="<?php echo $campos['unidadMedida']; ?>" required="">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="matprima_loteproveedor_up" class="bmd-label-floating">Lote Proveedor</label>
+                                <input type="num" pattern="[0-9]{1,100}" class="form-control"
+                                    name="matprima_loteproveedor_up" id="matprima_loteproveedor_up" maxlength="100"
+                                    value="<?php echo $campos['loteProveedor']; ?>" required="">
+                            </div>
+                        </div>
+                                                <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="matprima_loteproveedor_up" class="bmd-label-floating">Total Compra</label>
+                                <input type="num" pattern="[0-9]{1,100}" class="form-control"
+                                    name="matprima_loteproveedor_up" id="matprima_loteproveedor_up" maxlength="100"
+                                    value="<?php echo $campos['loteProveedor']; ?>" required="">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="categoria_descripcion_up" class="bmd-label-floating">Feha Ingreso</label>
+                                <input type="date" class="form-control" name="categoria_descripcion_up" 
+                                    id="categoria_descripcion_up" maxlength="40"
+                                    value="<?php echo $campos['fechaIngreso']; ?>" required="">
                             </div>
                         </div>
 
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label for="cliente_celular_up" class="bmd-label-floating">Celular</label>
-                                <input type="num" pattern="[0-9]{10,15}" class="form-control" name="cliente_celular_up"
-                                    id="cliente_celular_up" maxlength="27" value="<?php echo $campos['celular']; ?>">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label for="cliente_email_up" class="bmd-label-floating">Correo</label>
-                                <input type="email" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ@.-_]{1,100}" class="form-control"
-                                    name="cliente_email_up" id="cliente_email_up" maxlength="150"
-                                    value="<?php echo $campos['correo']; ?>">
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <fieldset>

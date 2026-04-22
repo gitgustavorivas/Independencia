@@ -16,7 +16,7 @@
 
 <!-- Content -->
 <div class="full-box tile-container">
-    <a href="<?php echo SERVERURL;?>matPrimaNew/" class="tile">
+    <a href="<?php echo SERVERURL;?>matPrimaList/" class="tile">
         <div class="tile-tittle">materia prima</div>
         <div class="tile-icon">
             <i class="fas fa-seedling fa-fw"></i>
@@ -24,7 +24,7 @@
         </div>
     </a>
 
-    <a href="<?php echo SERVERURL;?>etapProductionNew/" class="tile">
+    <a href="<?php echo SERVERURL;?>etapProductionList/" class="tile">
         <div class="tile-tittle">etapa produccion</div>
         <div class="tile-icon">
             <i class="fas fa-retweet fa-fw"></i>
@@ -32,7 +32,7 @@
         </div>
     </a>
 
-    <a href="<?php echo SERVERURL;?>presentacionNew/" class="tile">
+    <a href="<?php echo SERVERURL;?>presentacionList/" class="tile">
         <div class="tile-tittle">presentaciones</div>
         <div class="tile-icon">
             <i class="fas fa-stream fa-fw"></i>
@@ -40,7 +40,7 @@
         </div>
     </a>
 
-    <a href="<?php echo SERVERURL;?>nivelCalidadNew/" class="tile">
+    <a href="<?php echo SERVERURL;?>nivelCalidadList/" class="tile">
         <div class="tile-tittle">nivel de calidad</div>
         <div class="tile-icon">
             <i class="fas fa-award fa-fw"></i>
@@ -48,20 +48,23 @@
         </div>
     </a>
 
-    <a href="<?php echo SERVERURL;?>loteNew/" class="tile">
+    <a href="<?php echo SERVERURL;?>loteList/" class="tile">
         <div class="tile-tittle">lote de produccion</div>
         <div class="tile-icon">
             <i class="fas fa-table fa-fw"></i>
             <p>1205</i></p>
-
         </div>
     </a>
-    
-    <a href="<?php echo SERVERURL;?>categoriaNew/" class="tile">
+        <?php
+        require_once "./controladores/categoriaControlador.php";
+        $ins_categoria = new categoriaControlador();
+        $total_categoria = $ins_categoria->datos_categoria_controlador("Conteo",0);
+    ?>
+    <a href="<?php echo SERVERURL;?>categoriaList/" class="tile">
         <div class="tile-tittle">categoria</div>
         <div class="tile-icon">
             <i class="fa fa-sitemap fa-fw" ></i>
-            <p>1205</i></p>
+            <p><?php echo $total_categoria->rowCount();?> Registrados</i></p>
         </div>
     </a>
 </div>
